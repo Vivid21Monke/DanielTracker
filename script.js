@@ -52,3 +52,13 @@ function updateStats() {
 }
 updateStats();
 setInterval(updateStats, 5 * 60 * 1000);
+
+// Days skipped gym: starts at 5 on 2026-09-29 and goes up by 1 every day
+function updateGym() {
+  const start = new Date(2026, 8, 29);          // start day (month is 0-based)
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const days = Math.round((today - start) / 864e5);
+  setText('r-gym', 5 + Math.max(0, days));
+}
+updateGym();
+setInterval(updateGym, 60 * 1000); // re-check every minute so it flips at midnight
