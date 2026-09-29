@@ -1,0 +1,50 @@
+:root{--bg:#050505;--card:#0d0a0a;--line:#2e1518;--gold:#e5313a;--gold2:#a3222a;--text:#d9d2c3;--mut:#7d7565;--grn:#4fbf7a;--red:#d8574a;--blu:#4aa3c8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--text);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}
+h1,h2,.serif{font-family:Georgia,'Times New Roman',serif}
+.wrap{max-width:1040px;margin:auto;padding:12px;display:grid;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;min-width:0}
+h2{margin:0 0 8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+.mut{color:var(--mut);font-size:11px}
+.row{display:grid;gap:10px}
+.r2{grid-template-columns:2fr 1fr}.r3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:760px){.r2,.r3{grid-template-columns:1fr}}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+h1{margin:0;font-size:22px;color:var(--gold)}
+.pill{border:1px solid var(--line);border-radius:99px;padding:2px 9px;font-size:11px;color:var(--mut);background:#150d0e}
+.pill.on{color:var(--grn);border-color:#245a3a;background:#0d1a12}
+.alert{border-color:#6a1a20;background:#170708}
+.big{font-family:Georgia,serif;font-size:44px;color:var(--gold);letter-spacing:.02em;line-height:1.1}
+.bar{height:6px;background:#1d1012;border-radius:3px;overflow:hidden;margin:4px 0}
+.bar b{display:block;height:100%;background:var(--gold)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.tab{border:1px solid var(--line);background:#130c0d;color:var(--mut);border-radius:99px;padding:3px 10px;cursor:pointer;font:inherit;font-size:11px}
+.tab.on{color:var(--gold);border-color:var(--gold2)}
+.cam{height:170px;border:1px dashed var(--line);border-radius:4px;display:grid;place-items:center;text-align:center;color:var(--mut);background:repeating-linear-gradient(45deg,#0a0707,#0a0707 8px,#0e0a0a 8px,#0e0a0a 16px)}
+.bars{display:flex;align-items:flex-end;gap:3px;height:44px;margin:4px 0}
+.bars s{flex:1;background:#3a1a1d;text-decoration:none;border-radius:1px}
+.bars s.h{background:var(--gold)}
+.stat{display:flex;justify-content:space-between;border-bottom:1px solid #1c1112;padding:3px 0}
+.stat:last-child{border:0}
+.tag{display:inline-block;border-radius:3px;padding:0 6px;font-size:10px;margin-right:4px}
+.g{background:#12301f;color:var(--grn)}.o{background:#3a1015;color:#ff5a63}.r{background:#3a1512;color:var(--red)}.b{background:#0f2833;color:var(--blu)}
+.map{height:150px;border-radius:4px;background:radial-gradient(circle at 40% 55%,#1b2a1c,#0a0d0a 70%);border:1px solid var(--line);position:relative}
+.radar{aspect-ratio:1;max-width:210px;margin:auto;border-radius:50%;border:1px solid #2a4a30;background:radial-gradient(circle,transparent 30%,#2a4a3055 31%,transparent 32%,transparent 60%,#2a4a3055 61%,transparent 62%),#08100a;position:relative}
+.dot{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--grn)}
+.img{height:120px;border-radius:4px;background:linear-gradient(135deg,#3b1418,#180809 60%,#5a1c22);margin:6px 0;display:grid;place-items:center;color:var(--mut);font-size:11px}
+.week{display:flex;gap:8px;align-items:flex-end;height:80px}
+.week div{flex:1;text-align:center;font-size:10px;color:var(--mut)}
+.week em{display:block;background:var(--gold);border-radius:2px 2px 0 0;margin-bottom:3px}
+.week div:nth-child(4) em{background:var(--grn)}
+a{color:var(--gold)}
+
+/* Gallery photo, map, live dot */
+.photo{display:block;width:100%;max-height:560px;object-fit:contain;background:#000;border:1px solid var(--line);border-radius:4px}
+.gmap{width:100%;height:320px;border:1px solid var(--line);border-radius:4px;background:#0a0707}
+.pulse{display:inline-block;width:12px;height:12px;margin-right:12px;border-radius:50%;background:var(--grn);vertical-align:middle;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #4fbf7a99}100%{box-shadow:0 0 0 12px #4fbf7a00}}
+
+.r2e{grid-template-columns:1fr 1fr}
+@media(max-width:760px){.r2e{grid-template-columns:1fr}}
