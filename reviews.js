@@ -2,14 +2,12 @@
 // To let EVERYONE see the reviews, paste your Firebase Realtime Database URL here
 // (no trailing slash), e.g. 'https://daniel-tracker-default-rtdb.europe-west1.firebasedatabase.app'
 // Leave it empty and reviews are saved only in this browser.
-const DB_URL = 'https://danieltracker-default-rtdb.europe-west1.firebasedatabase.app';
+const DB_URL = 'https://danieltracker-default-rtdb.europe-west1.firebasedatabase.app/';
 
+const BASE = DB_URL.trim().replace(/\/+$/, '').replace(/^(?!https?:\/\/)(.+)/, 'https://$1');
 const $r = id => document.getElementById(id);
 let photoData = '';
-
-$r('rev-note').textContent = DB_URL
-  ? 'Reviews are shared: everyone who opens this page sees them.'
-  : 'Reviews are saved for everyone.';
+const status = m => { $r('rev-status').textContent = m; };
 
 // Resize photo to keep it small, then store as a data URL
 $r('rev-photo').onchange = e => {
@@ -29,17 +27,21 @@ $r('rev-photo').onchange = e => {
 
 async function loadReviews() {
   try {
-    if (DB_URL) {
-      const r = await fetch(DB_URL + '/reviews.json'); const d = await r.json() || {};
+    if (BASE) {
+      const r = await fetch(BASE + '/reviews.json');
+      if (!r.ok) throw new Error('HTTP ' + r.status + (r.status === 401 ? ' (Firebase rules block reading: publish the rules)' : r.status === 404 ? ' (database URL is wrong)' : ''));
+      const d = await r.json() || {};
+      status('');
       return Object.values(d);
     }
     return JSON.parse(localStorage.getItem('dt-reviews') || '[]');
-  } catch (e) { return []; }
+  } catch (e) { status('Could not load reviews: ' + e.message); return []; }
 }
 
 async function saveReview(rev) {
-  if (DB_URL) {
-    await fetch(DB_URL + '/reviews.json', { method: 'POST', body: JSON.stringify(rev) });
+  if (BASE) {
+    const r = await fetch(BASE + '/reviews.json', { method: 'POST', body: JSON.stringify(rev) });
+    if (!r.ok) throw new Error('HTTP ' + r.status + (r.status === 401 ? ' (Firebase rules block writing: publish the rules)' : r.status === 404 ? ' (database URL is wrong)' : ''));
   } else {
     const all = JSON.parse(localStorage.getItem('dt-reviews') || '[]'); all.push(rev);
     localStorage.setItem('dt-reviews', JSON.stringify(all));
@@ -70,9 +72,9 @@ $r('rev-send').onclick = async () => {
     $r('rev-text').value = ''; photoData = ''; $r('rev-photo').value = '';
     $r('rev-preview').style.display = 'none'; $r('rev-photoname').textContent = '';
     await render();
-  } catch (e) { alert('Could not save the review. Try again.'); }
+  } catch (e) { status('Could not save review: ' + e.message); }
   $r('rev-send').disabled = false;
 };
 
 render();
-if (DB_URL) setInterval(render, 15000); // pick up other people's reviews
+if (BASE) setInterval(render, 15000); // pick up other people's reviews
