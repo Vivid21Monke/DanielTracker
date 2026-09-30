@@ -1,7 +1,7 @@
 // ===== Birthday reviews, reactions and photo wall =====
 // Paste your Firebase Realtime Database URL between the quotes so EVERYONE sees the reviews.
 // Leave it empty and everything is saved only in this browser.
-const DB_URL = 'https://danieltracker-default-rtdb.europe-west1.firebasedatabase.app/';
+const DB_URL = 'https://danieltracker-default-rtdb.europe-west1.firebasedatabase.app';
 
 const BASE = DB_URL.trim().replace(/\/+$/, '').replace(/^(?!https?:\/\/)(.+)/, 'https://$1');
 const $r = id => document.getElementById(id);
