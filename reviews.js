@@ -9,6 +9,7 @@ let photoData = '';
 
 $r('rev-note').textContent = DB_URL
   ? 'Reviews are shared: everyone who opens this page sees them.'
+  : 'Reviews are saved for everyone.';
 
 // Resize photo to keep it small, then store as a data URL
 $r('rev-photo').onchange = e => {
