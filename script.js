@@ -148,7 +148,7 @@ else { setText('playlist-note', 'Link coming soon'); document.getElementById('pl
 
 // ===== Volkswagen Golf fund (edit these numbers and the bank details) =====
 const GOLF = { goal: 500, raised: 0 };
-const BANK = { name: 'Placeholder Name', bank: 'Placeholder Bank', iban: 'LV00 XXXX 0000 0000 0000 0', ref: 'VW Golf for Daniel' };
+const BANK = { name: 'Daniel Melnis', bank: 'Swedbank', iban: 'LV00 XXXX 0000 0000 0000 0', ref: 'VW Golf for Daniel' };
 (function () {
   const pct = Math.min(100, Math.round(GOLF.raised / GOLF.goal * 100));
   setText('golf-amount', '€' + GOLF.raised + ' / €' + GOLF.goal);
