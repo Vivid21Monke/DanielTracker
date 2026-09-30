@@ -3,10 +3,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DanielTracker</title>
 <link rel="stylesheet" href="style.css">
-</head><body><div class="wrap">
+</head><body><div class="ticker"><div class="ticker-track" id="ticker"></div></div>
+<canvas id="confetti"></canvas>
+<div class="wrap">
 
 <header class="card"><div><h1>DanielTracker</h1><div class="mut">Tracking Daniel Melnis.</div></div>
 <span class="pill on">● Updated: <span id="pagetime">0s</span></span></header>
+
+<div class="card banner" id="banner" hidden><div class="big" id="banner-text"></div><button class="tab on" id="banner-btn" style="margin-top:8px">🎉 More confetti</button></div>
 
 <div class="row r2e">
 <div class="card"><h2>Last seen</h2>
@@ -42,10 +46,10 @@
 <div class="row r2e">
 <div class="card"><h2>Daniel's birthday</h2>
 <div class="big" id="cd-bday">--</div>
-<div class="mut">4 October 2026</div></div>
+<div class="bar" style="margin-top:10px"><b id="pb-bday" style="width:0%"></b></div><div class="mut" id="pl-bday"></div></div>
 <div class="card"><h2>Daniel's birthday party</h2>
 <div class="big" id="cd-party">--</div>
-<div class="mut">17 October 2026</div></div></div>
+<div class="bar" style="margin-top:10px"><b id="pb-party" style="width:0%"></b></div><div class="mut" id="pl-party"></div></div></div>
 
 <div class="card"><h2>Birthday reviews</h2>
 <div class="rev-form">
@@ -56,6 +60,13 @@
 <img id="rev-preview" class="photo" style="display:none;max-height:180px;width:auto" alt=""></div>
 <div id="rev-status" class="mut" style="color:#ff5a63;margin-bottom:6px"></div>
 <div id="rev-list"></div></div>
+
+<div class="card"><h2>Photo wall</h2><div id="wall-grid" class="wall"></div></div>
+
+<div class="card"><h2>Party playlist</h2>
+<div class="mut" style="margin-bottom:8px">Add your songs to the party playlist so Daniel can't complain about the music.</div>
+<a id="playlist-link" class="tab on" href="#" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">🎵 Open playlist</a>
+<span class="mut" id="playlist-note" style="margin-left:8px"></span></div>
 
 <div class="row r2">
 <div class="card"><h2>Map</h2>

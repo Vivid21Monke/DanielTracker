@@ -75,3 +75,73 @@ function updateCountdowns() {
 }
 updateCountdowns();
 setInterval(updateCountdowns, 1000);
+
+// ===== Progress bars (30-day window before each date) =====
+function updateProgress() {
+  [['bday', targets['cd-bday']], ['party', targets['cd-party']]].forEach(([k, t]) => {
+    const start = t - 30 * 864e5;
+    const p = Math.min(100, Math.max(0, (Date.now() - start) / (t - start) * 100));
+    document.getElementById('pb-' + k).style.width = p + '%';
+    setText('pl-' + k, Math.floor(p) + '% there · ' + t.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }));
+  });
+}
+updateProgress();
+setInterval(updateProgress, 60 * 1000);
+
+// ===== Breaking news ticker =====
+const gym = document.getElementById('r-gym').textContent;
+const news = [
+  'Daniel skips gym again (' + gym + ' days and counting)',
+  'Sources confirm Daniel said "5 more minutes"... again',
+  'Local man leaves messages on read, friends furious',
+  'Daniel\'s football career remains a big "what if"',
+  'Snack supplies at Daniel\'s place reported critically low',
+  'Daniel declares Bench the greatest position in football',
+  'Experts baffled: Daniel is still online',
+  'Birthday countdown continues, gifts still pending'
+];
+const tk = document.getElementById('ticker');
+const line = news.map(n => '<span><em>BREAKING</em>' + n + '</span>').join('');
+tk.innerHTML = line + line;
+
+// ===== Confetti + birthday / party banner =====
+function confetti(ms = 8000) {
+  const c = document.getElementById('confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#e5313a', '#ffffff', '#ffd166', '#4fbf7a', '#4aa3c8'];
+  const ps = Array.from({ length: 160 }, () => ({
+    x: Math.random() * c.width, y: -Math.random() * c.height, s: 4 + Math.random() * 6,
+    v: 2 + Math.random() * 4, r: Math.random() * 6, vr: Math.random() * .2 - .1,
+    c: cols[Math.floor(Math.random() * cols.length)]
+  }));
+  const end = Date.now() + ms;
+  (function frame() {
+    x.clearRect(0, 0, c.width, c.height);
+    ps.forEach(p => {
+      p.y += p.v; p.r += p.vr; p.x += Math.sin(p.r);
+      if (p.y > c.height && Date.now() < end) p.y = -10;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c;
+      x.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6); x.restore();
+    });
+    if (Date.now() < end || ps.some(p => p.y < c.height)) requestAnimationFrame(frame);
+    else x.clearRect(0, 0, c.width, c.height);
+  })();
+}
+function specialDay() {
+  const h = location.hash, n = new Date();   // add #test-birthday or #test-party to the URL to preview
+  if (h === '#test-birthday' || (n.getMonth() === 9 && n.getDate() === 4)) return '🎂 HAPPY BIRTHDAY DANIEL! 🎂';
+  if (h === '#test-party' || (n.getMonth() === 9 && n.getDate() === 17)) return '🎉 IT\'S PARTY DAY! 🥳';
+  return '';
+}
+const dayText = specialDay();
+if (dayText) {
+  document.getElementById('banner').hidden = false;
+  setText('banner-text', dayText);
+  document.getElementById('banner-btn').onclick = () => confetti();
+  confetti();
+}
+
+// ===== Party playlist link (put your link here) =====
+const PLAYLIST_URL = '';   // e.g. 'https://open.spotify.com/playlist/...'
+if (PLAYLIST_URL) { document.getElementById('playlist-link').href = PLAYLIST_URL; }
+else { setText('playlist-note', 'Link coming soon'); document.getElementById('playlist-link').onclick = e => e.preventDefault(); }
