@@ -1,13 +1,23 @@
-// Gallery: uses photos.js if present, otherwise falls back to photo1-4.jpg
-// (photo code is guarded so a missing file can never stop the timers below)
-const SRC = (typeof PHOTOS !== 'undefined') ? PHOTOS : ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg'];
+// ===== Gallery: loads the photo files from your repo =====
+// Put the file names of your photos here (same folder as index.html, or add a path like 'photos/pic1.jpg')
+const PHOTO_FILES = [
+  'photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg',
+  'photo5.jpg', 'photo6.jpg', 'photo7.jpg', 'photo8.jpg'
+];
 const photo = document.getElementById('photo');
-photo.src = SRC[0];
-document.querySelectorAll('#tabs .tab').forEach((t, i) => t.onclick = () => {
-  document.querySelectorAll('#tabs .tab').forEach(x => x.classList.remove('on'));
-  t.classList.add('on');
-  photo.src = SRC[i];
+const tabsBox = document.getElementById('tabs');
+function showPhoto(i) {
+  photo.alt = 'Could not load ' + PHOTO_FILES[i];   // shown if the file name is wrong
+  photo.src = PHOTO_FILES[i];
+  tabsBox.querySelectorAll('.tab').forEach((t, k) => t.classList.toggle('on', k === i));
+}
+PHOTO_FILES.forEach((f, i) => {
+  const b = document.createElement('button');
+  b.className = 'tab'; b.textContent = 'Photo ' + (i + 1);
+  b.onclick = () => showPhoto(i);
+  tabsBox.append(b);
 });
+showPhoto(0);
 
 // Random minutes between 0 and max (inclusive)
 const rand = max => Math.floor(Math.random() * (max + 1));
