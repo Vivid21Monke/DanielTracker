@@ -2,7 +2,7 @@
 // Put the file names of your photos here (paths are relative to index.html)
 const PHOTO_FILES = [
   'photos/photo1.jpg', 'photos/photo2.jpg', 'photos/photo3.jpg', 'photos/photo4.jpg',
-  'photos/photo5.jpg', 'photos/photo6.jpg', 'photos/photo7.jpg', 'photos/photo8.jpg'
+  'photos/photo5.jpg', 'photos/photo6.jpg', 'photos/photo7.jpg', 'photos/photo8.jpg', 'photos/photo9.jpg'
 ];
 const photo = document.getElementById('photo');
 const tabsBox = document.getElementById('tabs');
