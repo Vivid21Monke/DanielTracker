@@ -62,3 +62,16 @@ function updateGym() {
 }
 updateGym();
 setInterval(updateGym, 60 * 1000); // re-check every minute so it flips at midnight
+
+// Countdowns (year 2026, local time)
+const targets = { 'cd-bday': new Date(2026, 9, 4), 'cd-party': new Date(2026, 9, 17) };
+function updateCountdowns() {
+  for (const id in targets) {
+    const ms = targets[id] - Date.now();
+    if (ms <= 0) { setText(id, Date.now() - targets[id] < 864e5 ? '🎉 Today!' : 'Done 🎉'); continue; }
+    const t = Math.floor(ms / 1000), p = n => String(n).padStart(2, '0');
+    setText(id, Math.floor(t / 86400) + 'd ' + p(Math.floor(t % 86400 / 3600)) + ':' + p(Math.floor(t % 3600 / 60)) + ':' + p(t % 60));
+  }
+}
+updateCountdowns();
+setInterval(updateCountdowns, 1000);

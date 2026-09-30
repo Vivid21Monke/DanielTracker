@@ -39,6 +39,24 @@
 <div class="stat"><span>Vibe</span><span class="tag g">geeked</span></div>
 <div class="mut" style="margin-top:6px">Totally accurate, trust us.</div></div></div>
 
+<div class="row r2e">
+<div class="card"><h2>Daniel's birthday</h2>
+<div class="big" id="cd-bday">--</div>
+<div class="mut">4 October 2026</div></div>
+<div class="card"><h2>Daniel's birthday party</h2>
+<div class="big" id="cd-party">--</div>
+<div class="mut">17 October 2026</div></div></div>
+
+<div class="card"><h2>Birthday reviews</h2>
+<div class="mut" id="rev-note" style="margin-bottom:8px"></div>
+<div class="rev-form">
+<input id="rev-name" maxlength="30" placeholder="Your name">
+<textarea id="rev-text" maxlength="500" rows="3" placeholder="Write your review about the birthday..."></textarea>
+<div class="rev-actions"><label class="tab">📷 Add photo<input id="rev-photo" type="file" accept="image/*" hidden></label>
+<span class="mut" id="rev-photoname"></span><button class="tab on" id="rev-send">Post review</button></div>
+<img id="rev-preview" class="photo" style="display:none;max-height:180px;width:auto" alt=""></div>
+<div id="rev-list"></div></div>
+
 <div class="row r2">
 <div class="card"><h2>Map</h2>
 <iframe class="gmap" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
@@ -54,4 +72,5 @@
 </div>
 <script src="photos.js"></script>
 <script src="script.js"></script>
+<script src="reviews.js"></script>
 </body></html>

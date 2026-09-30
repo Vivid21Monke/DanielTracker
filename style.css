@@ -48,3 +48,14 @@ a{color:var(--gold)}
 
 .r2e{grid-template-columns:1fr 1fr}
 @media(max-width:760px){.r2e{grid-template-columns:1fr}}
+
+/* Reviews */
+.rev-form{display:grid;gap:8px;margin-bottom:12px}
+.rev-form input,.rev-form textarea{width:100%;background:#130c0d;color:var(--text);border:1px solid var(--line);border-radius:4px;padding:8px;font:inherit}
+.rev-form input:focus,.rev-form textarea:focus{outline:1px solid var(--gold2)}
+.rev-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rev-actions #rev-send{margin-left:auto}
+.review{border-top:1px solid var(--line);padding:10px 0}
+.review b{color:var(--gold)}
+.review p{margin:4px 0;white-space:pre-wrap;word-break:break-word}
+.review img{max-width:100%;max-height:340px;border-radius:4px;border:1px solid var(--line);display:block;margin-top:6px}
