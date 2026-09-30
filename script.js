@@ -1,8 +1,9 @@
 // ===== Gallery: loads the photo files from your repo =====
 // Put the file names of your photos here (same folder as index.html, or add a path like 'photos/pic1.jpg')
 const PHOTO_FILES = [
-  'photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg',
-  'photo5.jpg', 'photo6.jpg', 'photo7.jpg', 'photo8.jpg'
+  'photo1.png', 'photo2.png', 'photo3.png', 'photo4.png',
+  'photo5.png', 'photo6.png', 'photo7.png', 'photo8.png',
+  'photo9.png'
 ];
 const photo = document.getElementById('photo');
 const tabsBox = document.getElementById('tabs');
