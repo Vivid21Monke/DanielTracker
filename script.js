@@ -144,4 +144,4 @@ if (dayText) {
 // ===== Party playlist link (put your link here) =====
 const PLAYLIST_URL = '';   // e.g. 'https://open.spotify.com/playlist/...'
 if (PLAYLIST_URL) { document.getElementById('playlist-link').href = PLAYLIST_URL; }
-else { setText('playlist-note', 'Link coming soon'); document.getElementById('playlist-link').onclick = e => e.preventDefault(); }
+else { setText('playlist-note', 'Link coming soon'); document.getElementById('https://open.spotify.com/playlist/2BvMr8YuihfzO2HtqX5euz?si=da752adb76274752').onclick = e => e.preventDefault(); }
