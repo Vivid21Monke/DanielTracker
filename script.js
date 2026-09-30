@@ -142,7 +142,7 @@ if (dayText) {
 }
 
 // ===== Party playlist link (put your link here) =====
-const PLAYLIST_URL = 'https://open.spotify.com/playlist/2BvMr8YuihfzO2HtqX5euz?si=da752adb76274752';   // e.g. 'https://open.spotify.com/playlist/...'
+const PLAYLIST_URL = 'https://open.spotify.com/playlist/6Hr7x2OLXjdbqGyQ61ivrO?si=5yZZvF4ySbWOM2PRrvlXmg&utm_source=copy-link&pi=vhtaE9E4R_C7C';   // e.g. 'https://open.spotify.com/playlist/...'
 if (PLAYLIST_URL) { document.getElementById('playlist-link').href = PLAYLIST_URL; }
 else { setText('playlist-note', 'Link coming soon'); document.getElementById('playlist-link').onclick = e => e.preventDefault(); }
 
