@@ -142,6 +142,21 @@ if (dayText) {
 }
 
 // ===== Party playlist link (put your link here) =====
-const PLAYLIST_URL = 'https://open.spotify.com/playlist/6Hr7x2OLXjdbqGyQ61ivrO?si=5yZZvF4ySbWOM2PRrvlXmg&utm_source=copy-link&pi=vhtaE9E4R_C7C';   // e.g. 'https://open.spotify.com/playlist/...'
+const PLAYLIST_URL = 'https://open.spotify.com/playlist/2BvMr8YuihfzO2HtqX5euz?si=da752adb76274752';   // e.g. 'https://open.spotify.com/playlist/...'
 if (PLAYLIST_URL) { document.getElementById('playlist-link').href = PLAYLIST_URL; }
 else { setText('playlist-note', 'Link coming soon'); document.getElementById('playlist-link').onclick = e => e.preventDefault(); }
+
+// ===== Volkswagen Golf fund (edit these numbers and the bank details) =====
+const GOLF = { goal: 500, raised: 0 };
+const BANK = { name: 'Placeholder Name', bank: 'Placeholder Bank', iban: 'LV00 XXXX 0000 0000 0000 0', ref: 'VW Golf for Daniel' };
+(function () {
+  const pct = Math.min(100, Math.round(GOLF.raised / GOLF.goal * 100));
+  setText('golf-amount', '€' + GOLF.raised + ' / €' + GOLF.goal);
+  document.getElementById('golf-bar').style.width = pct + '%';
+  setText('golf-label', pct + '% funded · €' + Math.max(0, GOLF.goal - GOLF.raised) + ' to go');
+  setText('bk-name', BANK.name); setText('bk-bank', BANK.bank); setText('bk-iban', BANK.iban); setText('bk-ref', BANK.ref);
+  document.querySelectorAll('.copy').forEach(b => b.onclick = () => {
+    const txt = document.getElementById(b.dataset.copy).textContent;
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500); }).catch(() => {});
+  });
+})();
