@@ -172,3 +172,61 @@ $r('golf-send').onclick = async () => {
 
 renderGolfList();
 if (BASE) setInterval(renderGolfList, 15000);
+
+// ===== Press counters: touch grass + vape requests (saved in the database) =====
+const shown = { touch: 0, vape: 0 };
+let pendingClicks = 0;
+const cstatus = m => { $r('cnt-status').textContent = m; };
+
+function paint(k, animate) {
+  const el = $r('cnt-' + k); el.textContent = shown[k];
+  if (animate) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+}
+
+function burst(btn, emoji) {
+  const card = btn.parentElement;
+  ['+1', emoji, emoji, '+1'].forEach((t, i) => {
+    const f = document.createElement('span'); f.className = 'float'; f.textContent = t;
+    f.style.left = (btn.offsetLeft + btn.offsetWidth / 2 + (Math.random() * 120 - 60)) + 'px';
+    f.style.top = (btn.offsetTop + 4) + 'px';
+    f.style.animationDelay = (i * 0.08) + 's';
+    card.append(f); setTimeout(() => f.remove(), 1300);
+  });
+}
+
+async function loadCounters() {
+  try {
+    if (BASE) {
+      const r = await fetch(BASE + '/counters.json');
+      if (!r.ok) throw httpErr(r);
+      const d = await r.json() || {}; cstatus('');
+      return { touch: d.touch || 0, vape: d.vape || 0 };
+    }
+    return store.get('dt-counters', { touch: 0, vape: 0 });
+  } catch (e) { cstatus('Could not load counters: ' + e.message); return null; }
+}
+
+async function bumpCounter(k) {
+  if (BASE) {
+    const r = await fetch(BASE + '/counters/' + k + '.json', { method: 'PUT', body: JSON.stringify({ '.sv': { increment: 1 } }) });
+    if (!r.ok) throw httpErr(r);
+  } else { store.set('dt-counters', { touch: shown.touch, vape: shown.vape }); }
+}
+
+async function refreshCounters() {
+  if (pendingClicks > 0) return;               // don't overwrite a click that is still saving
+  const d = await loadCounters();
+  if (d) { shown.touch = d.touch; shown.vape = d.vape; paint('touch'); paint('vape'); }
+}
+
+document.querySelectorAll('.pressbtn').forEach(b => b.onclick = async () => {
+  const k = b.dataset.c;
+  shown[k]++; paint(k, true); burst(b, b.dataset.emoji);
+  b.classList.remove('pressed'); void b.offsetWidth; b.classList.add('pressed');
+  pendingClicks++;
+  try { await bumpCounter(k); } catch (e) { cstatus('Could not save: ' + e.message); }
+  pendingClicks--;
+});
+
+refreshCounters();
+if (BASE) setInterval(refreshCounters, 15000);
