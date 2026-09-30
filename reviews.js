@@ -2,7 +2,7 @@
 // To let EVERYONE see the reviews, paste your Firebase Realtime Database URL here
 // (no trailing slash), e.g. 'https://daniel-tracker-default-rtdb.europe-west1.firebasedatabase.app'
 // Leave it empty and reviews are saved only in this browser.
-const DB_URL = '';
+const DB_URL = 'https://danieltracker-default-rtdb.europe-west1.firebasedatabase.app';
 
 const $r = id => document.getElementById(id);
 let photoData = '';
