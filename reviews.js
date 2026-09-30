@@ -6,7 +6,7 @@ const DB_URL = 'https://danieltracker-default-rtdb.europe-west1.firebasedatabase
 const BASE = DB_URL.trim().replace(/\/+$/, '').replace(/^(?!https?:\/\/)(.+)/, 'https://$1');
 const $r = id => document.getElementById(id);
 let photoData = '';
-const status = m => { $r('rev-status').textContent = m; };
+const setStatus = m => { $r('rev-status').textContent = m; };
 const REACTS = [['laugh', '😂'], ['fire', '🔥'], ['skull', '💀']];
 
 const store = {
@@ -38,11 +38,11 @@ async function loadReviews() {
       const r = await fetch(BASE + '/reviews.json');
       if (!r.ok) throw httpErr(r);
       const d = await r.json() || {};
-      status('');
+      setStatus('');
       return Object.entries(d).map(([id, v]) => ({ ...v, id }));
     }
     return store.get('dt-reviews', []).map(r => ({ ...r, id: r.id || 'l' + r.time }));
-  } catch (e) { status('Could not load reviews: ' + e.message); return []; }
+  } catch (e) { setStatus('Could not load reviews: ' + e.message); return []; }
 }
 
 async function saveReview(rev) {
@@ -92,7 +92,7 @@ async function render() {
         if (mine[r.id + key]) return;            // one reaction of each kind per browser
         mine[r.id + key] = true; store.set('dt-reacted', mine);
         count++; show(); b.classList.add('on');
-        try { await sendReaction(r.id, key); } catch (e) { status('Could not send reaction: ' + e.message); }
+        try { await sendReaction(r.id, key); } catch (e) { setStatus('Could not send reaction: ' + e.message); }
       };
       row.append(b);
     });
@@ -117,8 +117,8 @@ $r('rev-send').onclick = async () => {
     await saveReview({ name: $r('rev-name').value.trim().slice(0, 30), text: text.slice(0, 500), photo: photoData, time: Date.now() });
     $r('rev-text').value = ''; photoData = ''; $r('rev-photo').value = '';
     $r('rev-preview').style.display = 'none'; $r('rev-photoname').textContent = '';
-    status(''); await render();
-  } catch (e) { status('Could not save review: ' + e.message); }
+    setStatus(''); await render();
+  } catch (e) { setStatus('Could not save review: ' + e.message); }
   $r('rev-send').disabled = false;
 };
 
