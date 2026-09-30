@@ -3,8 +3,8 @@
 const SRC = (typeof PHOTOS !== 'undefined') ? PHOTOS : ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg'];
 const photo = document.getElementById('photo');
 photo.src = SRC[0];
-document.querySelectorAll('.tab').forEach((t, i) => t.onclick = () => {
-  document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+document.querySelectorAll('#tabs .tab').forEach((t, i) => t.onclick = () => {
+  document.querySelectorAll('#tabs .tab').forEach(x => x.classList.remove('on'));
   t.classList.add('on');
   photo.src = SRC[i];
 });
