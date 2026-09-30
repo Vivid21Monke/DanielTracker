@@ -146,17 +146,22 @@ const PLAYLIST_URL = 'https://open.spotify.com/playlist/6Hr7x2OLXjdbqGyQ61ivrO?s
 if (PLAYLIST_URL) { document.getElementById('playlist-link').href = PLAYLIST_URL; }
 else { setText('playlist-note', 'Link coming soon'); document.getElementById('playlist-link').onclick = e => e.preventDefault(); }
 
-// ===== Volkswagen Golf fund (edit these numbers and the bank details) =====
+// ===== Volkswagen Golf fund (edit the goal and the bank details) =====
+// GOLF.raised is a manual starting amount; contributions added on the page are added on top of it.
 const GOLF = { goal: 500, raised: 0 };
 const BANK = { name: 'Daniel Melnis', bank: 'Swedbank', iban: 'LV00 XXXX 0000 0000 0000 0', ref: 'VW Golf for Daniel' };
-(function () {
-  const pct = Math.min(100, Math.round(GOLF.raised / GOLF.goal * 100));
-  setText('golf-amount', '€' + GOLF.raised + ' / €' + GOLF.goal);
+function renderGolf(extra = 0) {
+  const raised = Math.round((GOLF.raised + extra) * 100) / 100;
+  const pct = Math.min(100, Math.round(raised / GOLF.goal * 100));
+  setText('golf-amount', '€' + raised + ' / €' + GOLF.goal);
   document.getElementById('golf-bar').style.width = pct + '%';
-  setText('golf-label', pct + '% funded · €' + Math.max(0, GOLF.goal - GOLF.raised) + ' to go');
+  setText('golf-label', pct + '% funded · €' + Math.round(Math.max(0, GOLF.goal - raised) * 100) / 100 + ' to go');
+}
+(function () {
   setText('bk-name', BANK.name); setText('bk-bank', BANK.bank); setText('bk-iban', BANK.iban); setText('bk-ref', BANK.ref);
   document.querySelectorAll('.copy').forEach(b => b.onclick = () => {
     const txt = document.getElementById(b.dataset.copy).textContent;
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500); }).catch(() => {});
   });
+  renderGolf();
 })();

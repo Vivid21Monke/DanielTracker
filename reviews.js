@@ -124,3 +124,51 @@ $r('rev-send').onclick = async () => {
 
 render();
 if (BASE) setInterval(render, 15000); // pick up other people's reviews and reactions
+
+// ===== Golf fund contributions (saved in the database, shown in the progress bar) =====
+const gstatus = m => { $r('golf-status').textContent = m; };
+
+async function loadGolf() {
+  try {
+    if (BASE) {
+      const r = await fetch(BASE + '/golf.json');
+      if (!r.ok) throw httpErr(r);
+      gstatus('');
+      return Object.values(await r.json() || {});
+    }
+    return store.get('dt-golf', []);
+  } catch (e) { gstatus('Could not load fund: ' + e.message); return []; }
+}
+
+async function renderGolfList() {
+  const all = (await loadGolf()).sort((a, b) => b.time - a.time);
+  renderGolf(all.reduce((sum, x) => sum + (Number(x.amount) || 0), 0));
+  const box = $r('golf-list'); box.textContent = '';
+  all.slice(0, 8).forEach(x => {
+    const d = document.createElement('div'); d.className = 'stat';
+    const a = document.createElement('span'); a.textContent = (x.name || 'Anonymous');
+    const b = document.createElement('span'); b.textContent = '€' + x.amount + ' · ' + new Date(x.time).toLocaleDateString();
+    d.append(a, b); box.append(d);
+  });
+}
+
+$r('golf-send').onclick = async () => {
+  const amount = Math.round(parseFloat($r('golf-input').value.replace(',', '.')) * 100) / 100;
+  if (!(amount > 0 && amount <= 100000)) { gstatus('Enter a valid amount, like 20 or 12.50'); return; }
+  const item = { name: $r('golf-name').value.trim().slice(0, 30), amount, time: Date.now() };
+  $r('golf-send').disabled = true;
+  try {
+    if (BASE) {
+      const r = await fetch(BASE + '/golf.json', { method: 'POST', body: JSON.stringify(item) });
+      if (!r.ok) throw httpErr(r);
+    } else {
+      const all = store.get('dt-golf', []); all.push(item); store.set('dt-golf', all);
+    }
+    $r('golf-input').value = ''; gstatus('');
+    await renderGolfList();
+  } catch (e) { gstatus('Could not save: ' + e.message); }
+  $r('golf-send').disabled = false;
+};
+
+renderGolfList();
+if (BASE) setInterval(renderGolfList, 15000);
